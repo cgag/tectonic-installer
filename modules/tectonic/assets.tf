@@ -31,6 +31,7 @@ resource "template_dir" "tectonic" {
     tectonic_channel_operator_image       = "${var.container_images["tectonic_channel_operator"]}"
     tectonic_prometheus_operator_image    = "${var.container_images["tectonic_prometheus_operator"]}"
     tectonic_etcd_operator_image          = "${var.container_images["tectonic_etcd_operator"]}"
+    license_updater_image                 = "${var.container_images["license_updater"]}"
 
     kubernetes_version             = "${var.versions["kubernetes"]}"
     monitoring_version             = "${var.versions["monitoring"]}"

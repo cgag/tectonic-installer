@@ -205,6 +205,9 @@ kubectl create -f heapster/service.yaml
 kubectl create -f heapster/deployment.yaml
 kubectl create -f stats-emitter.yaml
 
+echo "Creating License Updater"
+kubectl create -f license-updater.yaml
+
 echo "Creating Operators"
 kubectl create -f updater/tectonic-channel-operator-kind.yaml
 kubectl create -f updater/app-version-kind.yaml

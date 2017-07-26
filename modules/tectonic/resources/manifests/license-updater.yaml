@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tectonic-license-updater
+  labels:
+    k8s-app: tectonic-license-updater
+  namespace: tectonic-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: tectonic-license-updater
+      name: tectonic-license-updater
+    spec:
+      restartPolicy: Always
+      imagePullSecrets:
+          - name: coreos-pull-secret
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      containers:
+        - name: updater-client
+          image: ${license_updater_image}
+          #quay.io/coreos/tectonic-license-updater:4dbaa815eb406e79c684cd86983952fa5683b618
+          imagePullPolicy: IfNotPresent
+          # TODO(cgag): liveness probe?
+          env:
+            - name: ENDPOINT
+              value: "services.coreos.com/license"
+            - name: SECRET_NAMESPACE
+              value: "tectonic-system"
+            - name: SECRET_NAME
+              value: "tectonic-license-secret"
+            - name: POLL_INTERVAL
+              # TODO(cgag): make longer, probably 5m.  This is just short for testing.
+              value: "30s"
+          resources:
+              limits:
+                  # TODO(cgag): pretty rough estimates.
+                  cpu: 50m
+                  memory: 20Mi
+              requests:
+                  # TODO(cgag): could probably be lower.  should use almost 0 cpu.
+                  cpu: 20m
+                  memory: 10Mi
+          terminationMessagePath: /dev/termination-log

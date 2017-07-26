@@ -62,6 +62,7 @@ variable "tectonic_container_images" {
     tectonic_etcd_operator          = "quay.io/coreos/tectonic-etcd-operator:v0.0.1"
     calico                          = "quay.io/calico/node:v1.3.0"
     calico_cni                      = "quay.io/calico/cni:v1.9.1-4-g23fcd5f"
+    license_updater                 = "quay.io/coreos/tectonic-license-updater:4dbaa815eb406e79c684cd86983952fa5683b618"
   }
 }
 
